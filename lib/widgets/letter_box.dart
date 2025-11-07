@@ -40,16 +40,16 @@ class LetterBox extends StatelessWidget {
       decoration: BoxDecoration(
         color: _getBackgroundColor(),
         border: Border.all(
-          color: Colors.grey.shade400,
-          width: 2,
+          color: Colors.grey.shade300,
+          width: 1.5,
         ),
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Center(
         child: Text(
           letter ?? '',
           style: GoogleFonts.patrickHand(
-            fontSize: 24,
+            fontSize: 36,
             fontWeight: FontWeight.bold,
             color: _getTextColor(),
           ),

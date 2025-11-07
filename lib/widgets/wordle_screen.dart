@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../models/wordle_game.dart';
 import '../models/letter_state.dart';
 import '../services/storage_service.dart';
@@ -94,6 +95,7 @@ class _WordleScreenState extends State<WordleScreen> {
     if (game.gameWon || game.gameLost) {
       await _updateStats();
       await StorageService.clearSession();
+      _showGameOverDialog(context);
     }
   }
 
@@ -154,17 +156,7 @@ class _WordleScreenState extends State<WordleScreen> {
     final isGameOver = game.gameWon || game.gameLost;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Wordle'),
-        centerTitle: true,
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.bar_chart),
-            onPressed: () => _showStats(context),
-          ),
-        ],
-      ),
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -172,39 +164,33 @@ class _WordleScreenState extends State<WordleScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                if (isGameOver)
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    margin: const EdgeInsets.only(bottom: 20),
-                    decoration: BoxDecoration(
-                      color: game.gameWon ? Colors.green.shade100 : Colors.red.shade100,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: game.gameWon ? Colors.green : Colors.red,
-                        width: 2,
+                
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.refresh, size: 28),
+                        onPressed: _resetGame,
+                        color: Colors.grey.shade700,
                       ),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          game.gameWon ? '¡Ganaste!' : '¡Perdiste!',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: game.gameWon ? Colors.green.shade900 : Colors.red.shade900,
-                          ),
+                      Text(
+                        'WORDLE',
+                        style: GoogleFonts.patrickHand(
+                          fontSize: 36,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 2,
                         ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'La palabra era: ${game.targetWord}',
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.bar_chart, size: 28),
+                        onPressed: () => _showStats(context),
+                        color: Colors.grey.shade700,
+                      ),
+                    ],
                   ),
+                ),
                 WordleGrid(game: game),
                 const SizedBox(height: 20),
                 WordleKeyboard(
@@ -215,22 +201,6 @@ class _WordleScreenState extends State<WordleScreen> {
                   letterStates: letterStates,
                 ),
                 const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: _resetGame,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                  ),
-                  child: const Text(
-                    'Nuevo Juego',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
               ],
             ),
           ),
@@ -239,11 +209,80 @@ class _WordleScreenState extends State<WordleScreen> {
     );
   }
 
+  void _showGameOverDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        title: Text(
+          game.gameWon ? '¡Ganaste!' : '¡Perdiste!',
+          style: GoogleFonts.patrickHand(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            color: game.gameWon ? Colors.green.shade700 : Colors.red.shade700,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'La palabra era:',
+              style: GoogleFonts.patrickHand(
+                fontSize: 18,
+                color: Colors.grey.shade700,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              game.targetWord,
+              style: GoogleFonts.patrickHand(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey.shade800,
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          Center(
+            child: TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                _resetGame();
+              },
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+              ),
+              child: Text(
+                'Nuevo Juego',
+                style: GoogleFonts.patrickHand(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey.shade800,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   void _showStats(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Estadísticas'),
+        title: Text(
+          'Estadísticas',
+          style: GoogleFonts.patrickHand(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -264,7 +303,13 @@ class _WordleScreenState extends State<WordleScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cerrar'),
+            child: Text(
+              'Cerrar',
+              style: GoogleFonts.patrickHand(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
           ),
         ],
       ),
@@ -277,8 +322,20 @@ class _WordleScreenState extends State<WordleScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(fontWeight: FontWeight.w500)),
-          Text(value, style: const TextStyle(fontSize: 16)),
+          Text(
+            label,
+            style: GoogleFonts.patrickHand(
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          Text(
+            value,
+            style: GoogleFonts.patrickHand(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ],
       ),
     );

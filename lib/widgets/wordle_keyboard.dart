@@ -62,15 +62,16 @@ class WordleKeyboard extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             backgroundColor: keyColor,
             foregroundColor: textColor,
-            padding: const EdgeInsets.symmetric(vertical: 12),
+            padding: const EdgeInsets.symmetric(vertical: 14),
+            elevation: 0,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: BorderRadius.circular(6),
             ),
           ),
           child: Text(
             letter,
             style: GoogleFonts.patrickHand(
-              fontSize: 14,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -104,11 +105,12 @@ class WordleKeyboard extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: isEnabled ? onBackspacePressed : null,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey.shade400,
+                    backgroundColor: Colors.grey.shade300,
                     foregroundColor: Colors.black,
-                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    elevation: 0,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
+                      borderRadius: BorderRadius.circular(6),
                     ),
                   ),
                   child: const Icon(Icons.backspace),
@@ -122,17 +124,18 @@ class WordleKeyboard extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: isEnabled ? onSubmitPressed : null,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Colors.grey.shade800,
                     foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    elevation: 0,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
+                      borderRadius: BorderRadius.circular(6),
                     ),
                   ),
                   child: Text(
                     'ENVIAR',
                     style: GoogleFonts.patrickHand(
-                      fontSize: 14,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
