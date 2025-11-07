@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1049591044443",
+    "project_id": "flutterwordleparcial",
+    "storage_bucket": "flutterwordleparcial.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1049591044443:android:fdbca7836136b731ab227e",
+        "android_client_info": {
+          "package_name": "com.example.parcial_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC--k5WzVx08LvTUkzwa02uPNHKrfs7TcY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
