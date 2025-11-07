@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../models/letter_state.dart';
 
 class LetterBox extends StatelessWidget {
@@ -47,7 +48,7 @@ class LetterBox extends StatelessWidget {
       child: Center(
         child: Text(
           letter ?? '',
-          style: TextStyle(
+          style: GoogleFonts.patrickHand(
             fontSize: 24,
             fontWeight: FontWeight.bold,
             color: _getTextColor(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../models/letter_state.dart';
 
 class WordleKeyboard extends StatelessWidget {
@@ -68,7 +69,7 @@ class WordleKeyboard extends StatelessWidget {
           ),
           child: Text(
             letter,
-            style: const TextStyle(
+            style: GoogleFonts.patrickHand(
               fontSize: 14,
               fontWeight: FontWeight.bold,
             ),
@@ -128,9 +129,9 @@ class WordleKeyboard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     'ENVIAR',
-                    style: TextStyle(
+                    style: GoogleFonts.patrickHand(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
